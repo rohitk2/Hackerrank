@@ -210,5 +210,69 @@ Weather Observation Station 20
 ----------------------------------------
  Select round(S.LAT_N,4) from station S where (select count(Lat_N) from station where Lat_N < S.LAT_N ) = (select count(Lat_N) from station where Lat_N > S.LAT_N)
 
+                  
+Asian Population
+----------------------------------------
+SELECT SUM(CITY.POPULATION) 
+FROM CITY, COUNTRY
+WHERE CITY.COUNTRYCODE = COUNTRY.CODE AND COUNTRY.CONTINENT = 'Asia';
+
+
+African Cities
+----------------------------------------
+SELECT CITY.NAME 
+FROM CITY, COUNTRY
+WHERE CITY.COUNTRYCODE = COUNTRY.CODE AND COUNTRY.CONTINENT = 'Africa';
+
+
+Average Population of Each Continent
+----------------------------------------
+SELECT COUNTRY.CONTINENT, round(AVG(CITY.POPULATION) - .5)
+from CITY
+JOIN COUNTRY
+ON city.countrycode = country.code
+group by country.continent;
+
+
+The Report
+----------------------------------------
+SELECT if(GRADES.GRADE > 7, STUDENTS.NAME, NULL), GRADES.GRADE, STUDENTS.MARKS FROM STUDENTS, GRADES WHERE STUDENTS.MARKS BETWEEN GRADES.MIN_MARK and GRADES.MAX_MARK ORDER BY GRADES.GRADE DESC, STUDENTS.NAME ASC;
+
+
+Top Competitors
+----------------------------------------
+select h.hacker_id, h.name
+from submissions s
+inner join challenges c
+on s.challenge_id = c.challenge_id
+inner join difficulty d
+on c.difficulty_level = d.difficulty_level 
+inner join hackers h
+on s.hacker_id = h.hacker_id
+where s.score = d.score and c.difficulty_level = d.difficulty_level 
+group by h.hacker_id, h.name
+having count(s.hacker_id) > 1
+order by count(s.hacker_id) desc, s.hacker_id asc;
+
+
+Ollivanders Inventory
+----------------------------------------
+SELECT W.id, WP.age, W.coins_needed, W.power 
+FROM Wands as W JOIN Wands_Property as WP on W.code = WP.code 
+WHERE WP.is_evil = 0 and coins_needed = 
+    (SELECT min(coins_needed) FROM Wands JOIN Wands_Property 
+     ON Wands.code = Wands_Property.code
+    where Wands.power = W.power and WP.age = Wands_Property.age)
+order by W.power desc, WP.age desc
+
+
+Draw The Triangle 1
+----------------------------------------
+SELECT REPEAT('* ', @NUMBER := @NUMBER - 1) FROM information_schema.tables, (SELECT @NUMBER:=21) t LIMIT 20
+
+
+Draw The Traingle 2
+----------------------------------------
+SELECT REPEAT('* ', @NUMBER := @NUMBER + 1) FROM information_schema.tables, (SELECT @NUMBER:=0) t LIMIT 20
 
 
