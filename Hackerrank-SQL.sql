@@ -151,4 +151,64 @@ Weather Observation Station 12
 ----------------------------------------
 SELECT DISTINCT CITY FROM STATION WHERE CITY REGEXP('^[^aeiou]') and CITY REGEXP('.[^aeiou]$');
 
+Population Density Difference
+----------------------------------------
+SELECT (MAX(POPULATION) - MIN(POPULATION)) FROM CITY
+
+
+The Blunder
+----------------------------------------
+SELECT CEIL(AVG(Salary)-AVG(REPLACE(Salary,'0',''))) FROM EMPLOYEES;
+
+
+Top Earner
+----------------------------------------
+SELECT ROUND(SUM(LAT_N), 2), ROUND(SUM(LONG_W), 2) FROM STATION
+
+
+Weather Observation Station 2
+----------------------------------------
+SELECT AVG(POPULATION) FROM CITY WHERE DISTRICT = 'California'
+
+
+Weather Observation Station 13
+----------------------------------------
+SELECT ROUND((SUM(LAT_N) - .00005), 4) FROM STATION WHERE LAT_N BETWEEN 38.788 AND 137.2345
+
+
+Weather Observation Station 14
+----------------------------------------
+SELECT ROUND((MAX(LAT_N) - .00005), 4) FROM STATION WHERE LAT_N < 137.2345
+
+
+Weather Observation Station 15
+----------------------------------------
+SELECT ROUND(LONG_W, 4) FROM STATION WHERE LAT_N = (SELECT MAX(LAT_N) FROM STATION WHERE LAT_N < 137.2345)
+
+
+Weather Observation Station 16
+----------------------------------------
+SELECT ROUND(MIN(LAT_N), 4) FROM STATION WHERE LAT_N > 38.778
+
+
+Weather Observation Station 17
+----------------------------------------
+SELECT ROUND(LONG_W, 4) FROM STATION WHERE LAT_N = (SELECT MIN(LAT_N) FROM STATION WHERE LAT_N > 38.778)
+
+
+Weather Observation Station 18
+----------------------------------------
+SELECT round((max(LAT_N) - min(LAT_N) + max(LONG_W) - min(LONG_W))*10000)*0.0001 FROM STATION
+
+
+Weather Observation Station 19
+----------------------------------------
+SELECT round(sqrt(POWER((max(LAT_N) - min(LAT_N)), 2) + POWER((max(LONG_W) - min(LONG_W)), 2))*10000)*0.0001 FROM STATION
+
+
+Weather Observation Station 20
+----------------------------------------
+ Select round(S.LAT_N,4) from station S where (select count(Lat_N) from station where Lat_N < S.LAT_N ) = (select count(Lat_N) from station where Lat_N > S.LAT_N)
+
+
 
